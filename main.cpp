@@ -11,7 +11,17 @@ struct Node{
 template <typename T>
 struct list{
     public:
-    list() : first(nullptr), /*last(nullptr)*/ {}
+    list() : first(nullptr) /*last(nullptr)*/ {}
+
+    int size(){
+    	int list_size = 0;
+    	Node<T>* p = first;
+    	while(p){
+    		p = p -> next;
+    		list_size++;
+    	}
+    	return list_size;
+    }
 
     bool is_empty(){
         return nullptr == first;
@@ -20,15 +30,14 @@ struct list{
     void push_back(T _value){
         Node<T>* new_el = new Node<T>(_value);
         if(is_empty()){
-            first = new_el;         
-            first -> next = new_el;          /*last = new_el;*/
+            first = new_el;         /*last = new_el;*/
             return;
         }
         Node<T>* p = first;
-        while(nullptr != p){        //while(!p)
+        while(nullptr != p -> next){        //while(!p)
             p = p -> next;              
         }
-        p = new_el;                 //push fu**ing back
+        p -> next = new_el;               //push fu**ing back
     }
 
     void print(){
@@ -49,9 +58,9 @@ struct list{
             return list_el;
         }
         while(list_el && list_el -> value != _value){           //??????
-            list_el = list_el -> next;
+        	list_el = list_el -> next;
         }
-        return(list_el && list_el -> value == _value) ? list_el : nullptr;
+        return list_el;
     }
 
     void delete_first(){
@@ -67,43 +76,46 @@ struct list{
         if(is_empty()){
             return;
         }
-        Node<T>* p = first;  
+        Node<T>* p = first; 
+        Node<T>* new_last_element;
         while(nullptr != p -> next){
+        	new_last_element = p;
             p = p -> next;
         }
         //p -> next = nullptr;
         delete p;
+        new_last_element -> next = nullptr;
         //last = p;
+
     }
 
     void delete_concrete(T _value){
         if(is_empty()){                 //проверка списка на наличие элементов
             return;
         }
-        if(first -> value == _value){   //проверка равенства значения первого элемента списка значению _value (зачем нам вытаскивать value если first и first -> value это одно и тоже)
+        while(first -> value == _value){   //проверка равенства значения первого элемента списка значению _value (зачем нам вытаскивать value если first и first -> value это одно и тоже)
             delete_first();
-            return;
         }
         /*else if(last -> value == _value){   //проверка равенства значения последнего элемента списка значению _value
             delete_last();
             return;
         }*/
-        else{
+        if(!is_empty()){
             Node<T>* slow = first;                      //создаем указатель на структуру типа Node и присваиваем значение указателя first
             Node<T>* fast = slow -> next;               //создаем указатель на структуру типа Node и присваиваем значение next указателя slow
-            while(fast && fast -> value != _value){     //проверка указателя fast и значения value на соответсвие значение _value
-                slow = fast;                            
-                fast = fast -> next;                    
-                if(fast == nullptr){                    //if(!fast) <--- как понимать эту запись?
-                    delete fast;                        //по сути fast здесь можно не удалять
-                    std::cout << "There is no value " << _value << " in the list." << std::endl;
-                    return;
+            while(fast){     //проверка указателя fast и значения value на соответсвие значение _value                 
+                if(fast -> value == _value){
+                	slow -> next = fast -> next;
+                    delete fast;
+                    fast = slow -> next;
                 }
+                else{
+                    slow = fast;                            
+                    fast = fast -> next; 
                 /*else if(fast == _value){
                     delete fast;
-                }*/
-                slow -> next = fast -> next;
-                delete fast;                            //и здесь fast можно не удалять
+                }*/ 
+                }                      
             }
         }
     }
@@ -118,10 +130,18 @@ struct list{
 int main() {
     list<int> l;
     std::cout << l.is_empty() << std::endl;
+    l.push_back(111);
+    l.push_back(111);
+    l.push_back(111);
     l.push_back(3);
     l.push_back(111);
     l.push_back(23);
     l.push_back(324);
+    l.push_back(111);
+    l.push_back(111);
+    l.push_back(447);
+    l.push_back(111);
+    l.push_back(111);
     std::cout << l.is_empty() << std::endl;
     l.print();
     std::cout << l.find(23) << std::endl; //выводит адрес, а не должен
