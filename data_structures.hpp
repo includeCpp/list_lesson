@@ -17,18 +17,21 @@ template <typename T>
 struct list{
     public:
     list(Node<T>* _first = nullptr);
+    list(const list<T>& copy);
 
-    int size() const;
-	bool is_empty() const;
-    void push_back(T _value);
-    void print() const;
-    Node<T>* find(T _value) const;
-    void delete_first();
-    void delete_last();
-    void delete_concrete(T _value);
-    T& operator[](const int index);
-    void insert(const int num, const T& _value);
-    int find_index(int num) const;
+    int size() const;                               //++
+	bool is_empty() const;                          //++
+    void push_back(const T& _value);                //++
+    void print() const;                             //++
+    Node<T>* find(T _value) const;                  //++
+    void delete_first();                            //++
+    void delete_last();                             //++
+    void delete_concrete(T _value);                 //++
+    T& operator[](const int index);                 //++
+    list<T>& operator=(const list<T>& copy);        //++
+    void insert(const int num, const T& _value);    //++
+    int find_index(int num) const;                  //++
+    ~list();
     private:
     Node<T>* first;
     /*Node<T>* last;*/
@@ -39,6 +42,15 @@ Node<T>::Node(const T& _value, Node<T>* _next) : value(_value), next(_next) {}
 
 template <typename T>
 list<T>::list(Node<T>* _first) : first(_first) {}
+
+template<typename T>
+list<T>::list(const list<T>& copy){
+    Node<T>* p = copy.first;
+    while(p){
+        this -> push_back(p -> value);
+        p = p -> next;
+    }
+}
 
 template <typename T>
 int list<T>::size() const {                    //возвращает размер списка
@@ -57,25 +69,22 @@ bool list<T>::is_empty() const {               //проверяет не явл�
 }
 
 template <typename T>
-void list<T>::push_back(T _value){             //добавляет новый элемент в конец списка
+void list<T>::push_back(const T& _value){             //добавляет новый элемент в конец списка
     Node<T>* new_el = new Node<T>(_value);
     if(is_empty()){
         first = new_el;         
         return;
     }
     Node<T>* p = first;
-    while(nullptr != p -> next){        //while(!p)
+    while(nullptr != p -> next){
         p = p -> next;
     }
-    p -> next = new_el;               //push fu**ing back
+    p -> next = new_el;
 }
 
 template <typename T>
 void list<T>::print() const {                  //выводит весь список
-    Node<T>* current_el = first;            
-    /*if(is_empty()){                       //здесь возможно проверка не нужна 
-        return;                             //если current_el равен nullptr то цикл не будет выполняться
-    }*/
+    Node<T>* current_el = first;
     while(current_el){
         std::cout << current_el -> value << " ";
         current_el = current_el -> next;
@@ -86,10 +95,7 @@ void list<T>::print() const {                  //выводит весь спи�
 template <typename T>
 Node<T>* list<T>::find(T _value) const {       //поиск элемента по заданному значению(возврашает первый найденный элемент)
     Node<T>* list_el = first;
-    /*if(is_empty()){                       //здесь проверка тоже не нужна т.к. если list_el = nullptr то цикл не выполниться
-        return list_el;
-    }*/
-    while(list_el && list_el -> value != _value){           //??????
+    while(list_el && list_el -> value != _value){
         list_el = list_el -> next;
     }
     return list_el;
@@ -125,20 +131,16 @@ void list<T>::delete_last(){                   //удаляет последни
 
 template <typename T>
 void list<T>::delete_concrete(T _value){       //удаляет все элементы с заданным значением
-    if(is_empty()){                         //проверка списка на наличие элементов
+    if(is_empty()){
         return;
     }
-    while(first -> value == _value){        //проверка равенства значения первого элемента списка значению _value (зачем нам вытаскивать value если first и first -> value это одно и тоже)
+    while(first -> value == _value){
         delete_first();
     }
-    /*else if(last -> value == _value){     //проверка равенства значения последнего элемента списка значению _value
-        delete_last();
-        return;
-    }*/
     if(!is_empty()){
-        Node<T>* slow = first;                      //создаем указатель на структуру типа Node и присваиваем значение указателя first
-        Node<T>* fast = slow -> next;               //создаем указатель на структуру типа Node и присваиваем значение next указателя slow
-        while(fast){                                //проверка указателя fast и значения value на соответсвие значение _value                 
+        Node<T>* slow = first;
+        Node<T>* fast = slow -> next;
+        while(fast){       
             if(fast -> value == _value){
                 slow -> next = fast -> next;
                 delete fast;
@@ -146,17 +148,14 @@ void list<T>::delete_concrete(T _value){       //удаляет все элем�
             }
             else{
                 slow = fast;
-                fast = fast -> next; 
-            /*else if(fast == _value){
-                delete fast;
-            }*/ 
+                fast = fast -> next;
             }                      
         }
     }
 }
 
 template <typename T>
-T& list<T>::operator[](const int num){                     //требуется объяснение         добавляет оператор "[]"
+T& list<T>::operator[](const int num){                     //добавляет оператор "[]"
     Node<T>* p = first;
     for(int i = 0; i < num && p; i++){
         p = p -> next;
@@ -165,35 +164,33 @@ T& list<T>::operator[](const int num){                     //требуется 
     return ret_val;
 }
 
+template<typename T>
+list<T>& list<T>::operator=(const list<T>& copy){
+    if(this == &copy){
+        return *this;
+    }
+    Node<T>* p = first;
+    while(p){
+        p = p -> next;
+        delete first;
+        first = p;
+    }
+    p = copy.first;
+    while(p){
+        this -> push_back(p -> value);
+        p = p -> next;
+    }
+    return *this;
+}
+
 template <typename T>
-void list<T>::insert(int num, const T& _value){            //здесь ошибка
+void list<T>::insert(int num, const T& _value){
     Node<T>* p = first;
     for(int i = 0; i < num - 1; i++){
         p = p -> next;
     }
-    // p - соответствует индексу num - 1
-    // p -> next - соответствует индексу num
     Node<T>* t = new Node<T>(_value, p -> next);
-    // t необходимо подставить на место элемента с индексом num
-    // необходимо сдвинуть хвост списка 
     p -> next = t;
-    
-
-    /*if(num > ){
-        //delete num;     ??не работает
-        first -> push_back(value_1);
-        return;
-    }
-    for(int i = 0; i < num; i++){
-        p = p -> next;
-        if(i == num - 1){               //if(i = num - 1) :))
-            Node<T>* save = p;
-            p -> value = value_1;
-            p -> next = save;
-            delete save;                    //можно не удалять?
-            return;
-        }
-    }*/
     return;
 }
 
@@ -214,6 +211,16 @@ int list<T>::find_index(int num) const {               //поиск элемен
         }
     }
     return 0;
+}
+
+template<typename T>
+list<T>::~list(){
+    Node<T>* p = first;
+    while(p){
+        p = p -> next;
+        delete first;
+        first = p;
+    }
 }
 
 } //data_structures
