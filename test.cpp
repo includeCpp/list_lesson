@@ -72,7 +72,7 @@ std::string test_2(T value_1, T value_2){
 	return "Passed";
 }
 
-template<typename T>
+/*template<typename T>
 std::string test_3(T value_1, T value_2, T value_3, T value_4, T value_5){
 	data_structures::list<T> l;
 	l.push_back(value_1);
@@ -92,7 +92,7 @@ std::string test_3(T value_1, T value_2, T value_3, T value_4, T value_5){
 		return "Failed";
 	}
 	return "Passed";
-}
+}*/
 
 template<typename T>
 std::string test_4(T value_1, T value_2, T value_3){
@@ -109,6 +109,24 @@ std::string test_4(T value_1, T value_2, T value_3){
 	std::cout << l.find(value_3) << std::endl;
 	std::cout << &l[2] << std::endl;
 	return "Passed";
+}
+
+template<typename T>
+std::string test_5(T value_1, T value_2, T value_3, T value_4){
+	data_structures::list<T> l;
+	data_structures::list<T> list_2;
+	l.push_back(value_1);
+	l.push_back(value_2);
+	l.push_back(value_3);
+	list_2.push_back(value_4);
+	list_2.push_back(value_4);
+	list_2.push_back(value_4);
+	list_2.push_back(value_4);
+	list_2 = l;
+	if(list_2.size() == 3 && list_2[0] == value_1 && list_2[1] == value_2 &&list_2[2] == value_3){
+		return "Passed";
+	}
+	return "Failed";
 }
 
 int main(){
@@ -130,7 +148,7 @@ int main(){
 	std::cout << "test 2.3: "<< test_2("g", "p") << std::endl;
 	std::cout << "test 2.4: "<< test_2(2.34, 15.89) << std::endl;
 	std::cout << std::endl;
-	std::cout << "Test 3." << std::endl;
+	/*std::cout << "Test 3." << std::endl;
 	std::cout << "Includes: print(), test operator \"=\"." << std::endl;
 	std::cout << std::endl;
 	std::cout << "test 3.1: "<< test_3(1, 2, 3, 4, 5) << std::endl;
@@ -138,7 +156,7 @@ int main(){
 	std::cout << "test 3.3: "<< test_3("a", "b", "c", "d", "e") << std::endl;
 	std::cout << "test 3.4: "<< test_3(1.11, 2.22, 3.33, 4.44, 5.55) << std::endl;
 	std::cout << "Print test passed." << std::endl;
-	std::cout << std::endl;
+	std::cout << std::endl;*/
 	std::cout << "Test 4." << std::endl;
 	std::cout << "Includes: find()." << std::endl;
 	std::cout << std::endl;
@@ -150,5 +168,13 @@ int main(){
 	std::cout << std::endl;
 	std::cout << "test 4.4: "<< test_4(2.34, 15.89, 13.2) << std::endl;
 	std::cout << std::endl;
+	std::cout << "Test 5." << std::endl;
+	std::cout << "Includes: test operator \"=\"." << std::endl;
+	std::cout << std::endl;
+	std::cout << "test 5.1: "<< test_5(1, 2, 3, 4) << std::endl;
+	std::cout << "test 5.2: "<< test_5("test 3.1", "test 3.2", "test 3.3", "test 3.4") << std::endl;
+	std::cout << "test 5.3: "<< test_5("a", "b", "c", "d") << std::endl;
+	std::cout << "test 5.4: "<< test_5(1.11, 2.22, 3.33, 4.44) << std::endl;
+	std::cout << "Print test passed." << std::endl;
 	return 0;
 }

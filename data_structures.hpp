@@ -160,10 +160,10 @@ T& list<T>::operator[](const int num){                     //добавляет 
     for(int i = 0; i < num && p; i++){
         p = p -> next;
     }
-    T& ret_val = p -> value;
-    return ret_val;
+    T& rval = p -> value;
+    return rval;
 }
-
+/*
 template<typename T>
 list<T>& list<T>::operator=(const list<T>& copy){
     if(this == &copy){
@@ -179,6 +179,36 @@ list<T>& list<T>::operator=(const list<T>& copy){
     while(p){
         this -> push_back(p -> value);
         p = p -> next;
+    }
+    return *this;
+}*/
+
+template<typename T>
+list<T>& list<T>::operator=(const list<T>& copy){
+    if(this == &copy){
+        return *this;
+    }
+    Node<T>* p = first -> next;
+    Node<T>* j = p;
+    Node<T>* m = copy.first -> next;
+    delete first;
+    first = copy.first;
+    for(int i = 1; m; i++){
+        p = p -> next;
+        delete j;
+        j = p;
+        this -> insert(i, m -> value);
+        m = m -> next;
+        if(!m -> next){
+            i++;
+            this -> insert(i, m -> value);
+            while(p){
+                p = p -> next;
+                delete j;
+                j = p;
+            }
+            return *this;
+        }
     }
     return *this;
 }
