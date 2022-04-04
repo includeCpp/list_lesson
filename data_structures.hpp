@@ -31,8 +31,9 @@ struct list{
     list<T>& operator=(const list<T>& copy);        //++
     void insert(const int num, const T& _value);    //++
     int find_index(int num) const;                  //++
+    void clear();
     ~list();
-    private:
+    //private:
     Node<T>* first;
     /*Node<T>* last;*/
 };
@@ -108,7 +109,9 @@ void list<T>::delete_first(){                  //удаляет первый э�
     }
     Node<T>* erase_el = first;
     first = erase_el -> next;
+    std::cout << "delete_first func 1" << std::endl;
     delete erase_el;
+    std::cout << "delete_first func 2" << std::endl;
 }
 
 template <typename T>
@@ -160,10 +163,10 @@ T& list<T>::operator[](const int num){                     //добавляет 
     for(int i = 0; i < num && p; i++){
         p = p -> next;
     }
-    T& ret_val = p -> value;
-    return ret_val;
+    T& rval = p -> value;
+    return rval;
 }
-
+/*
 template<typename T>
 list<T>& list<T>::operator=(const list<T>& copy){
     if(this == &copy){
@@ -179,6 +182,61 @@ list<T>& list<T>::operator=(const list<T>& copy){
     while(p){
         this -> push_back(p -> value);
         p = p -> next;
+    }
+    return *this;
+}*/
+
+template<typename T>
+void list<T>::clear(){
+    Node<T>* p = first;
+    while(p){
+        p = p -> next;
+        delete first;
+        first = p;
+    }
+
+}
+
+template<typename T>
+list<T>& list<T>::operator=(const list<T>& copy){
+    if(this == &copy){
+        return *this;
+    }
+    if(!first || !copy.first){
+        if(!first){
+            first = copy.first;
+            Node<T>* p = copy.first -> next;
+            while(p){        
+                std::cout << "one two" << std::endl;           
+                push_back(p -> value);
+                p = p -> next;
+            }
+            return *this;
+        }
+        clear();
+        return *this;
+    }
+    Node<T>* p = first;
+    Node<T>* m = copy.first;
+    Node<T>* last = p;
+    while(m && p){
+        p -> value = m -> value;
+        last = p;
+        p = p -> next;
+        m = m -> next;
+    }
+    while(p){
+        Node<T>* j = p;
+        p = p -> next;
+        delete j;
+    }
+    if(last){
+        last -> next = nullptr;
+    }
+    while(m){
+        last -> next = new Node<T>(m -> value);
+        last = last -> next;
+        m = m -> next;
     }
     return *this;
 }
@@ -215,12 +273,7 @@ int list<T>::find_index(int num) const {               //поиск элемен
 
 template<typename T>
 list<T>::~list(){
-    Node<T>* p = first;
-    while(p){
-        p = p -> next;
-        delete first;
-        first = p;
-    }
+    clear();
 }
 
 } //data_structures
