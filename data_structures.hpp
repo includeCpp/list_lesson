@@ -19,21 +19,21 @@ struct list{
     list(Node<T>* _first = nullptr);
     list(const list<T>& copy);
 
-    int size() const;                               //++
-	bool is_empty() const;                          //++
-    void push_back(const T& _value);                //++
-    void print() const;                             //++
-    Node<T>* find(T _value) const;                  //++
-    void delete_first();                            //++
-    void delete_last();                             //++
-    void delete_concrete(T _value);                 //++
-    T& operator[](const int index);                 //++
-    list<T>& operator=(const list<T>& copy);        //++
-    void insert(const int num, const T& _value);    //++
-    int find_index(int num) const;                  //++
-    void clear();
-    ~list();
-    //private:
+    int size() const;                               //++            Prints size of the list
+	bool is_empty() const;                          //++            Checking if the list is empty   
+    void push_back(const T& _value);                //++            Adds new elements in the end of the list
+    void print() const;                             //++            Prints all the elemets of the list
+    Node<T>* find(T _value) const;                  //++            Finds an exact value given by user if the list contains that value
+    void delete_first();                            //++            Erases first element of the list
+    void delete_last();                             //++            Erases last element of the list
+    void delete_concrete(T _value);                 //++            Erases all the elements with that value
+    T& operator[](const int index);                 //++            Adds operator "[]"
+    list<T>& operator=(const list<T>& copy);        //++            Adds operator "="
+    void insert(const int num, const T& _value);    //++            Adds value given by user to the list to the exact place 
+    int find_index(int num) const;                  //++            Finds value by index of the list
+    void clear();                                   //++            Removes all the elements of the list
+    ~list();                                        //              List's destructor
+    private:
     Node<T>* first;
     /*Node<T>* last;*/
 };
@@ -212,7 +212,7 @@ list<T>& list<T>::operator=(const list<T>& copy){
             return *this;
         }
         clear();
-        std::cout << "Argument was empty.";
+        std::cout << "The argument was empty.";
         return *this;
     }
     Node<T>* p = first;

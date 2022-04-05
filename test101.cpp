@@ -103,7 +103,7 @@ int main(){
 	l2.push_back(10);
 	l2.push_back(20);
 	l2.push_back(30);
-	std::cout << "list l is empty: ";
+	std::cout << "list l is empty.";
 	l.print();
 	std::cout << "list l2: ";
 	l2.print();
