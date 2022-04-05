@@ -204,16 +204,15 @@ list<T>& list<T>::operator=(const list<T>& copy){
     }
     if(!first || !copy.first){
         if(!first){
-            first = copy.first;
-            Node<T>* p = copy.first -> next;
-            while(p){        
-                std::cout << "one two" << std::endl;           
-                push_back(p -> value);
-                p = p -> next;
+            Node<T>* m = copy.first;
+            while(m){
+                push_back(m -> value);
+                m = m -> next;
             }
             return *this;
         }
         clear();
+        std::cout << "Argument was empty.";
         return *this;
     }
     Node<T>* p = first;

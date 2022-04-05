@@ -90,7 +90,7 @@ int main(){
 	l.push_back(30);
 	std::cout << "list l: ";
 	l.print();
-	std::cout << "list l2 is empty: ";
+	std::cout << "list l2 is empty." << std::endl;
 	l2 = l;
 	std::cout << l2.size() << std::endl;
 	l2.print();
