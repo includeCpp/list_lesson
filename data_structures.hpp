@@ -33,7 +33,7 @@ struct list{
     int find_index(int num) const;                  //++            Finds value by index of the list
     void clear();                                   //++            Removes all the elements of the list
     ~list();                                        //              List's destructor
-    private:
+    //private:
     Node<T>* first;
     /*Node<T>* last;*/
 };
@@ -48,7 +48,7 @@ template<typename T>
 list<T>::list(const list<T>& copy){
     Node<T>* p = copy.first;
     while(p){
-        this -> push_back(p -> value);
+        push_back(p -> value);
         p = p -> next;
     }
 }
@@ -71,7 +71,7 @@ bool list<T>::is_empty() const {               //проверяет не явл�
 
 template <typename T>
 void list<T>::push_back(const T& _value){             //добавляет новый элемент в конец списка
-    Node<T>* new_el = new Node<T>(_value);
+	Node<T>* new_el = new Node<T>(_value);
     if(is_empty()){
         first = new_el;         
         return;

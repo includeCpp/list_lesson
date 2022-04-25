@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 #include "data_structures.hpp"
 
@@ -112,6 +113,24 @@ int main(){
 	std::cout << "6th test is finished.";
 	std::cout << std::endl;
 	std::cout << std::endl;
+
+
+	l.clear();
+	l2.clear();
+	
+	for(int i = 0; i < 2; i++){
+		int value;
+		std::cin >> value;
+		try{
+			if(value == 0){
+				std::string str = "Exception caught.";
+				throw str;
+			}
+		} catch(std::string x){
+			std::cout << x << std::endl;
+		}
+		l.push_back(value);
+	}
 
 
 
