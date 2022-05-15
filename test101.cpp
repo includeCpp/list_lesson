@@ -6,7 +6,8 @@ int main(){
 	data_structures::list<int> l;
 	data_structures::list<int> l2;
 	std::cout << std::endl;
-	l.push_back(100);
+	std::cout << std::endl;
+	/*l.push_back(100);
 	l.push_back(90);
 	l.push_back(80);
 	l2.push_back(10);
@@ -113,14 +114,60 @@ int main(){
 	std::cout << std::endl;
 	std::cout << std::endl;
 
+	l2.clear();
+	l.clear();*/
 
+	//exceptions tests
 
+	try{
+		std::cout << "l.print(); " << std::endl;
+		l.print();
+	} catch (const std::bad_alloc& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;
+	}
 
+	try{
+		std::cout << std::endl;
+		std::cout << "l2.print(); " << std::endl;
+		l2.print();
+	} catch (const std::bad_alloc& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;
+	}
 
+	l.push_back(13);
+	l.push_back(20);
+	l.push_back(9);
+	try{
+		std::cout << std::endl;
+		std::cout << "find" << std::endl;
+		l.find(11);
+	} catch (std::invalid_argument& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;	
+	}
 
+	try{
+		std::cout << std::endl;
+		std::cout << "operator []" << std::endl;
+		std::cout << l[5] << std::endl;
+	} catch (std::out_of_range& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;	
+	}
 
+	l.clear();
 
+	try{
+		std::cout << std::endl;
+		std::cout << "clear" << std::endl;
+		l.clear();
+	} catch (std::bad_alloc& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;
+		std::cout << std::endl;	
+		std::cout << std::endl;	
+	}
 
 
 	return 0;
 }
+
+
+
