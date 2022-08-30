@@ -16,7 +16,7 @@ int main() {
     l.push_back(111);
     std::cout << l.is_empty() << std::endl;
     l.print();
-    std::cout << l.find(23) << std::endl; //выводит адрес, а не должен
+    std::cout << l.find(23) << std::endl;
     l.delete_first();
     l.print();
     l.delete_concrete(111);
