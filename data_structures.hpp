@@ -16,23 +16,23 @@ public:
 template <typename T>                                                   
 struct list{
     public:
-    list(Node<T>* _first = nullptr);
+    list(Node<T>* _first = nullptr)noexcept;
     list(const list<T>& copy);
-    list(list<T>&& _value);
-    int size() const;                               
-	bool is_empty() const;                          
+    list(list<T>&& _value)noexcept;
+    int size() const noexcept;                               
+	bool is_empty() const noexcept;                          
     void push_back(const T& _value);                
     void print() const;                             
-    Node<T>* find(const T& _value) const;                  
-    void delete_first();                            
-    void delete_last();                             
-    void delete_value(const T& _value);                 
+    Node<T>* find(const T& _value) const noexcept;                  
+    void delete_first() noexcept;                            
+    void delete_last() noexcept;                             
+    void delete_value(const T& _value) noexcept;                 
     T& operator[](const int index);
     const T& operator[](const int index)const;                 
     list<T>& operator=(const list<T>& copy);
-    list<T>& operator=(list<T>&& move);      
+    list<T>& operator=(list<T>&& move)noexcept;      
     void insert(const int num, const T& _value); 
-    void clear();                
+    void clear()noexcept;
     ~list();
     private:
     Node<T>* first;
@@ -42,7 +42,7 @@ template <typename T>
 Node<T>::Node(const T& _value, Node<T>* _next) : value(_value), next(_next) {}
 
 template <typename T>
-list<T>::list(Node<T>* _first) : first(_first) {}
+list<T>::list(Node<T>* _first) noexcept : first(_first) {}
 
 template<typename T>
 list<T>::list(const list<T>& copy){
@@ -59,12 +59,12 @@ list<T>::list(const list<T>& copy){
 }
 
 template<typename T>
-list<T>::list(list<T>&& _value) : first(_value.first){
+list<T>::list(list<T>&& _value) noexcept : first(_value.first){
 	_value.first = nullptr;
 }
 
 template <typename T>
-int list<T>::size() const{
+int list<T>::size() const noexcept{
     int list_size = 0;
     Node<T>* p = first;
     while(p){
@@ -75,7 +75,7 @@ int list<T>::size() const{
 }
                                                                         
 template <typename T>
-bool list<T>::is_empty() const{
+bool list<T>::is_empty() const noexcept{
     return nullptr == first;
 }
 
@@ -95,6 +95,9 @@ void list<T>::push_back(const T& _value){
 
 template <typename T>
 void list<T>::print() const {
+    //exception
+    if(is_empty()) throw std::logic_error{"List is empty."};
+    //function logic
     Node<T>* current_el = first;
     while(current_el){
         std::cout << current_el -> value << " ";
@@ -104,7 +107,7 @@ void list<T>::print() const {
 }
 
 template <typename T>
-Node<T>* list<T>::find(const T& _value) const{
+Node<T>* list<T>::find(const T& _value) const noexcept{
     Node<T>* list_el = first;
     while(list_el && list_el -> value != _value){
         list_el = list_el -> next;
@@ -113,7 +116,7 @@ Node<T>* list<T>::find(const T& _value) const{
 }
 
 template <typename T>
-void list<T>::delete_first(){
+void list<T>::delete_first() noexcept{
     if(is_empty()){
         return;
     }
@@ -123,7 +126,7 @@ void list<T>::delete_first(){
 }
 
 template <typename T>
-void list<T>::delete_last(){
+void list<T>::delete_last() noexcept{
     if(is_empty()){
         return;
     }
@@ -138,7 +141,8 @@ void list<T>::delete_last(){
 }
 
 template <typename T>
-void list<T>::delete_value(const T& _value){
+void list<T>::delete_value(const T& _value) noexcept{
+    //function logic
     if(is_empty()){
         return;
     }
@@ -164,22 +168,26 @@ void list<T>::delete_value(const T& _value){
 
 template <typename T>
 T& list<T>::operator[](const int num){
+    //function logic
     Node<T>* p = first;
     for(int i = 0; i < num && p; i++){
         p = p -> next;
-    }
+    }//exception
+    if(!p) throw std::out_of_range{"Out of range. Container's size is less than given argument."};
+    //exception end
     T& rval = p -> value;
     return rval;
 }
 
 template <typename T>
 const T& list<T>::operator[](const int num) const{
+    //function logic
     return const_cast<const T&>((*this)[num]);
 }
 
 
 template<typename T>
-void list<T>::clear(){
+void list<T>::clear() noexcept {
     Node<T>* p = first;
     while(p){
         p = p -> next;
@@ -232,7 +240,7 @@ list<T>& list<T>::operator=(const list<T>& copy){
 }
 
 template<typename T>
-list<T>& list<T>::operator=(list<T>&& move){
+list<T>& list<T>::operator=(list<T>&& move) noexcept {
 	clear();
 	first = move.first;
 	move.first = nullptr;
