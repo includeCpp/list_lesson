@@ -194,6 +194,14 @@ int main(){
 	std::cout << "test 2.3: "<< test_2("g", "p") << std::endl;
 	std::cout << "test 2.4: "<< test_2(2.34, 15.89) << std::endl;
 	std::cout << std::endl;
+	std::cout << "Test 3." << std::endl;
+	std::cout << "Includes: print(), test operator \"=\"." << std::endl;
+	std::cout << std::endl;
+	std::cout << "test 3.1: "<< test_3(1, 2, 3, 4, 5) << std::endl;
+	std::cout << "test 3.2: "<< test_3("test 3.1", "test 3.2", "test 3.3", "test 3.4", "test 3.5") << std::endl;
+	std::cout << "test 3.3: "<< test_3("a", "b", "c", "d", "e") << std::endl;
+	std::cout << "test 3.4: "<< test_3(1.11, 2.22, 3.33, 4.44, 5.55) << std::endl;
+	std::cout << "Print test passed." << std::endl;
 	std::cout << "Test 4." << std::endl;
 	std::cout << "Includes: find()." << std::endl;
 	std::cout << std::endl;
@@ -205,14 +213,172 @@ int main(){
 	std::cout << std::endl;
 	std::cout << "test 4.4: "<< std::endl;
 	std::cout << std::endl;
-	std::cout << "Test 3." << std::endl;
-	std::cout << "Includes: print(), test operator \"=\"." << std::endl;
 	std::cout << std::endl;
-	//std::cout << "test 3.1: "<< test_3(1, 2, 3, 4, 5) << std::endl;
-	//std::cout << "test 3.2: "<< test_3("test 3.1", "test 3.2", "test 3.3", "test 3.4", "test 3.5") << std::endl;
-	std::cout << "test 3.3: "<< test_3("a", "b", "c", "d", "e") << std::endl;
-	//std::cout << "test 3.4: "<< test_3(1.11, 2.22, 3.33, 4.44, 5.55) << std::endl;
-	std::cout << "Print test passed." << std::endl;
+
+	data_structures::list<int> l;
+	data_structures::list<int> l2;
 	std::cout << std::endl;
+	std::cout << "Push back test for array \"l\" and \"l2\": " << std::endl;
+	std::cout << std::endl;
+	l.push_back(100);
+	l.push_back(90);
+	l.push_back(80);
+	l2.push_back(10);
+	l2.push_back(20);
+	l2.push_back(30);
+	l2.push_back(40);
+	l2.push_back(50);
+	std::cout << "list l: ";
+	l.print();
+	std::cout << "list l2: ";
+	l2.print();
+	std::cout << std::endl;
+	std::cout << "operator= test for array \"l\" and \"l2\" (if l2 > l): " << std:: endl;
+	std::cout << std::endl;
+	l2 = l;
+	std::cout << l2.size() << std::endl;
+	l2.print();
+	std::cout << "1st test is finished.";
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "operator= test for array \"l\" and \"l2\" (if l2 < l): " << std:: endl;
+	l2.clear();
+	l.clear();
+	l.push_back(100);
+	l.push_back(90);
+	l.push_back(80);
+	l.push_back(70);
+	l.push_back(60);
+	l2.push_back(10);
+	l2.push_back(20);
+	l2.push_back(30);
+	std::cout << "list l: ";
+	l.print();
+	std::cout << "list l2: ";
+	l2.print();
+	l2 = l;
+	std::cout << l2.size() << std::endl;
+	l2.print();
+	std::cout << "2nd test is finished.";
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "operator= test for array \"l\" and \"l2\" (if l2 == l): " << std:: endl;
+	l2.clear();
+	l.clear();
+	l.push_back(100);
+	l.push_back(90);
+	l.push_back(80);
+	l2.push_back(10);
+	l2.push_back(20);
+	l2.push_back(30);
+	std::cout << "list l: ";
+	l.print();
+	std::cout << "list l2: ";
+	l2.print();
+	l2 = l;
+	l2.print();
+	std::cout << "3rd test is finished.";
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "operator= test for array \"l\" and \"l2\" case l.size & l2.size == 1: " << std:: endl;
+	l.clear();
+	l2.clear();
+	l.push_back(100);
+	l2.push_back(22);
+	std::cout << "list l: ";
+	l.print();
+	std::cout << "list l2: ";
+	l2.print();
+	l2 = l;
+	std::cout << l2.size() << std::endl;
+	l2.print();
+	std::cout << "4th test is finished.";
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "operator= test for array \"l\" and \"l2\" case l2 is empty: " << std:: endl;
+	l.clear();
+	l2.clear();
+	l.push_back(10);
+	l.push_back(20);
+	l.push_back(30);
+	std::cout << "list l: ";
+	l.print();
+	std::cout << "list l2(empty): " << std::endl;
+	l2 = l;
+	std::cout << l2.size() << std::endl;
+	l2.print();
+	std::cout << "5th test is finished.";
+	std::cout << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "operator= test for array \"l\" and \"l2\" case l is empty: " << std:: endl;
+	l2.clear();
+	l.clear();
+	l2.push_back(10);
+	l2.push_back(20);
+	l2.push_back(30);
+	std::cout << "list l(empty): ";
+	l.print();
+	std::cout << "list l2: ";
+	l2.print();
+	l2 = l;
+	l2.print();
+	std::cout << "6th test is finished.";
+	std::cout << std::endl;
+	std::cout << std::endl;
+	l2.clear();
+	l.clear();
+
+	//exceptions tests
+
+	try{
+		std::cout << "l.print(); " << std::endl;
+		l.print();
+	} catch (const std::bad_alloc& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;
+	}
+
+	try{
+		std::cout << std::endl;
+		std::cout << "l2.print(); " << std::endl;
+		l2.print();
+	} catch (const std::bad_alloc& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;
+	}
+
+	l.push_back(13);
+	l.push_back(20);
+	l.push_back(9);
+	try{
+		std::cout << std::endl;
+		std::cout << "find" << std::endl;
+		l.find(11);
+	} catch (std::invalid_argument& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;	
+	}
+
+	try{
+		std::cout << std::endl;
+		std::cout << "operator []" << std::endl;
+		std::cout << l[5] << std::endl;
+	} catch (std::out_of_range& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;	
+	}
+
+	l.clear();
+
+	try{
+		std::cout << std::endl;
+		std::cout << "clear" << std::endl;
+		l.clear();
+	} catch (std::bad_alloc& e){
+		std::cout << "Caught expected exception: " << e.what() << std::endl;
+		std::cout << std::endl;	
+		std::cout << std::endl;	
+	}
 	return 0;
 }
